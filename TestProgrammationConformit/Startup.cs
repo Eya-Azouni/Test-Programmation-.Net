@@ -29,6 +29,7 @@ namespace TestProgrammationConformit
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IEventCommentRepository, EventCommentRepository>();
 
             services.AddDbContext<ConformitContext>(options =>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestProgrammationConformit.Entities;
+using TestProgrammationConformit.Entities.Pagination;
 using TestProgrammationConformit.Infrastructures;
 
 namespace TestProgrammationConformit.Services
@@ -23,6 +24,7 @@ namespace TestProgrammationConformit.Services
             if (comment == null)
                 throw new ArgumentNullException(nameof(comment));
 
+            comment.DateOfCreation = DateTimeOffset.Now;
             comment.EventId = eventId;
             _context.Comments.Add(comment);
         }
@@ -100,9 +102,9 @@ namespace TestProgrammationConformit.Services
             return _context.Events.Where(e => e.Id == eventId).FirstOrDefault();
         }
 
-        public IEnumerable<Event> GetEvents()
+        public Task<PagedList<Event>> GetEvents(PagingParameters pagingParameters)
         {
-            return _context.Events.OrderBy(e => e.Title).ToList();
+            return Task.FromResult(PagedList<Event>.GetPagedList(_context.Events.OrderBy(e => e.Title), pagingParameters.PageNumber, pagingParameters.PageSize));
         }
 
         IEnumerable<Event> IEventCommentRepository.GetEvents(IEnumerable<Guid> eventIds)

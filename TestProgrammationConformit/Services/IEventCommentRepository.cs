@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestProgrammationConformit.Entities;
+using TestProgrammationConformit.Entities.Pagination;
 
 namespace TestProgrammationConformit.Services
 {
@@ -17,7 +18,7 @@ namespace TestProgrammationConformit.Services
         bool CommentExists(Guid commentId);
 
         // Events part
-        IEnumerable<Event> GetEvents();
+        Task<PagedList<Event>> GetEvents(PagingParameters pagingParameters);
         IEnumerable<Event> GetEvents(IEnumerable<Guid> eventIds);
         Event GetEvent(Guid eventId);
         void AddEvent(Event occasion);
