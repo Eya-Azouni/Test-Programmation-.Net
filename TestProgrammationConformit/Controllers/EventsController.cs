@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TestProgrammationConformit.Entities;
 using TestProgrammationConformit.Entities.Pagination;
 using TestProgrammationConformit.Models;
 using TestProgrammationConformit.Services;
@@ -52,6 +47,18 @@ namespace TestProgrammationConformit.Controllers
             var eventToReturn = _mapper.Map<Models.EventDto>(eventEntity);
 
             return CreatedAtRoute("GetEventById", new { eventId = eventToReturn.Id }, eventToReturn);
+        }
+
+        [HttpDelete("{eventId}")]
+        public ActionResult DeleteEvent(Guid eventId)
+        {
+            var deleted = _eventCommentRepository.DeleteEvent(eventId);
+            _eventCommentRepository.Save();
+
+            if (deleted)
+                return Ok("Event successfully deleted !");
+
+                return NotFound();
         }
     }
 }

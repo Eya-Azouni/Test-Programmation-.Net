@@ -15,7 +15,7 @@ namespace TestProgrammationConformit.Services
         Comment GetComment(Guid eventId, Guid commentId);
         void AddComment(Guid eventId, Comment comment);
         void UpdateComment(Comment comment);
-        void DeleteComment(Comment comment);
+        bool DeleteComment(Guid eventId, Guid commentId);
         bool CommentExists(Guid commentId);
 
         // Events part
@@ -24,7 +24,7 @@ namespace TestProgrammationConformit.Services
         Event GetEvent(Guid eventId);
         void AddEvent(Event occasion);
         void UpdateEvent(Event occasion);
-        void DeleteEvent(Event occasion);
+        bool DeleteEvent(Guid eventId);
         bool EventExists(Guid eventId);
 
         bool Save();

@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TestProgrammationConformit.Entities;
 using TestProgrammationConformit.Models;
 using TestProgrammationConformit.Services;
@@ -66,6 +64,18 @@ namespace TestProgrammationConformit.Controllers
             var commentToReturn = _mapper.Map<CommentDto>(commentEntity);
 
             return CreatedAtRoute("GetCommentByIdForEvent", new { eventId = eventId, commentId = commentToReturn.Id }, commentToReturn);
+        }
+
+        [HttpDelete("{commentId}")]
+        public IActionResult DeleteComment(Guid eventId, Guid commentId)
+        {
+            var deleted = _eventCommentRepository.DeleteComment(eventId, commentId);
+            _eventCommentRepository.Save();
+
+            if (deleted)
+                return Ok("Comment successfully deleted !");
+
+            return NotFound();
         }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TestProgrammationConformit.Entities;
 using TestProgrammationConformit.Entities.Pagination;
 using TestProgrammationConformit.Infrastructures;
@@ -42,26 +41,35 @@ namespace TestProgrammationConformit.Services
             _context.Events.Add(occasion);
         }
 
-        public void DeleteComment(Comment comment)
+        public bool DeleteComment(Guid eventId, Guid commentId)
         {
-            if (comment == null)
-                throw new ArgumentNullException(nameof(comment));
+            if (eventId == Guid.Empty)
+                throw new ArgumentNullException(nameof(eventId));
 
-            if(comment.Id == Guid.Empty)
-                throw new ArgumentNullException(nameof(comment.Id));
+            if(commentId == Guid.Empty)
+                throw new ArgumentNullException(nameof(commentId));
+
+            var comment = GetComment(eventId, commentId);
+
+            if (comment == null)
+                return false;
 
             _context.Comments.Remove(comment);
+            return true;
         }
 
-        public void DeleteEvent(Event occasion)
+        public bool DeleteEvent(Guid eventId)
         {
-            if (occasion == null)
-                throw new ArgumentNullException(nameof(occasion));
+            if (eventId == Guid.Empty)
+                throw new ArgumentNullException(nameof(eventId));
 
-            if (occasion.Id == Guid.Empty)
-                throw new ArgumentNullException(nameof(occasion.Id));
+            var occasion = GetEvent(eventId);
+
+            if (occasion == null)
+                return false;
 
             _context.Events.Remove(occasion);
+            return true;
         }
 
         public bool CommentExists(Guid commentId)
