@@ -1,20 +1,25 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestProgrammationConformit.Entities;
 using TestProgrammationConformit.Entities.Pagination;
 using TestProgrammationConformit.Infrastructures;
+using TestProgrammationConformit.Models;
 
 namespace TestProgrammationConformit.Services
 {
     public class EventCommentRepository : IEventCommentRepository
     {
         private readonly ConformitContext _context;
+        private readonly IMapper _mapper;
 
-        public EventCommentRepository(ConformitContext context)
+        public EventCommentRepository(ConformitContext context, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         public void AddComment(Guid eventId, Comment comment)
         {
@@ -102,9 +107,19 @@ namespace TestProgrammationConformit.Services
             return _context.Events.Where(e => e.Id == eventId).FirstOrDefault();
         }
 
-        public Task<PagedList<Event>> GetEvents(PagingParameters pagingParameters)
+        public Page<EventDto> GetEvents(PagingParameters pagingParameters)
         {
-            return Task.FromResult(PagedList<Event>.GetPagedList(_context.Events.OrderBy(e => e.Title), pagingParameters.PageNumber, pagingParameters.PageSize));
+            IQueryable<Event> query = _context.Events;
+
+            var count =  query.Count();
+            var items =  query
+                .Skip(pagingParameters.PageNumber)
+                .Take(pagingParameters.PageSize)
+                .Select(ev => _mapper.Map<EventDto>(ev))
+                .ToList();
+
+            return new Page<EventDto>(items, count, pagingParameters.PageNumber, pagingParameters.PageSize);
+
         }
 
         IEnumerable<Event> IEventCommentRepository.GetEvents(IEnumerable<Guid> eventIds)
@@ -115,7 +130,7 @@ namespace TestProgrammationConformit.Services
             return _context.Events.Where(e => eventIds.Contains(e.Id)).OrderBy(e => e.Title).ToList();
         }
 
-        public bool save()
+        public bool Save()
         {
             return (_context.SaveChanges() >= 0);
         }

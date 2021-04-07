@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,21 +9,14 @@ namespace TestProgrammationConformit.Entities.Pagination
 {
     public class PagingParameters
     {
-        const int maxPageSize = 50;
+        const int MaxPageSize = 100;
 
-        public int PageNumber { get; set; } = 1;
-        private int _pageSize = 10;
+        [FromQuery]
+        [Range(1, int.MaxValue, ErrorMessage = "Page Number must be greater than 0.")]
+        public int PageNumber { get; set; }
 
-        public int PageSize
-        {
-            get
-            {
-                return _pageSize;
-            }
-            set
-            {
-                _pageSize = (value > maxPageSize) ? maxPageSize : value;
-            }
-        }
+        [FromQuery]
+        [Range(1, MaxPageSize, ErrorMessage = "Page Size must be greater than 0 and less than 100.")]
+        public int PageSize { get; set; }
     }
 }
