@@ -143,14 +143,41 @@ namespace TestProgrammationConformit.Services
             return (_context.SaveChanges() >= 0);
         }
 
-        public void UpdateComment(Comment comment)
+        public bool UpdateComment(Guid eventId, Comment comment)
         {
-            // not implemented
+            if (comment == null)
+                throw new ArgumentNullException(nameof(comment));
+
+            if(comment.Id == Guid.Empty)
+                throw new ArgumentNullException(nameof(comment.Id));
+
+            var oldComment = GetComment(eventId, comment.Id);
+            if (oldComment == null)
+                return false;
+
+            oldComment.Description = comment.Description;
+            oldComment.DateOfCreation = DateTimeOffset.Now;
+            _context.Update(oldComment);
+            return true;
         }
 
-        public void UpdateEvent(Event occasion)
+        public bool UpdateEvent(Event occasion)
         {
-            // not implemented
+            if (occasion == null)
+                throw new ArgumentNullException(nameof(occasion));
+
+            if (occasion.Id == Guid.Empty)
+                throw new ArgumentNullException(nameof(occasion.Id));
+
+            var oldEvent = GetEvent(occasion.Id);
+            if (oldEvent == null)
+                return false;
+
+            oldEvent.Title = occasion.Title;
+            oldEvent.Description = occasion.Description;
+            oldEvent.InvolvedPerson = occasion.InvolvedPerson;
+            _context.Update(oldEvent);
+            return true;
         }
 
 

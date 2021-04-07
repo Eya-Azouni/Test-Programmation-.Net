@@ -66,14 +66,38 @@ namespace TestProgrammationConformit.Controllers
             return CreatedAtRoute("GetCommentByIdForEvent", new { eventId = eventId, commentId = commentToReturn.Id }, commentToReturn);
         }
 
+        [HttpPut]
+        public ActionResult<CommentDto> UpdateComment(Guid eventId, [FromBody] CommentForPUTDto comment)
+        {
+            if (eventId == null)
+                throw new ArgumentNullException(nameof(eventId));
+
+            if (!_eventCommentRepository.EventExists(eventId))
+                return NotFound();
+
+            var commentEntity = _mapper.Map<Comment>(comment);
+            var updated = _eventCommentRepository.UpdateComment(eventId, commentEntity);
+
+            if (!updated)
+                return NotFound();
+
+            _eventCommentRepository.Save();
+            var commentToReturn = _mapper.Map<CommentDto>(commentEntity);
+
+            return AcceptedAtRoute("GetCommentByIdForEvent", new { eventId = eventId, commentId = commentToReturn.Id }, commentToReturn);
+        }
+
         [HttpDelete("{commentId}")]
         public IActionResult DeleteComment(Guid eventId, Guid commentId)
         {
             var deleted = _eventCommentRepository.DeleteComment(eventId, commentId);
-            _eventCommentRepository.Save();
+            
 
             if (deleted)
+            {
+                _eventCommentRepository.Save();
                 return Ok("Comment successfully deleted !");
+            }     
 
             return NotFound();
         }

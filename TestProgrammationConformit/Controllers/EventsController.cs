@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using TestProgrammationConformit.Entities;
 using TestProgrammationConformit.Entities.Pagination;
 using TestProgrammationConformit.Models;
 using TestProgrammationConformit.Services;
@@ -47,6 +48,24 @@ namespace TestProgrammationConformit.Controllers
             var eventToReturn = _mapper.Map<Models.EventDto>(eventEntity);
 
             return CreatedAtRoute("GetEventById", new { eventId = eventToReturn.Id }, eventToReturn);
+        }
+
+        [HttpPut]
+        public ActionResult<EventDto> UpdateComment([FromBody] EventForPUTDto eventDto)
+        {
+            if (eventDto == null)
+                throw new ArgumentNullException(nameof(eventDto));
+
+            var eventEntity = _mapper.Map<Event>(eventDto);
+            var updated = _eventCommentRepository.UpdateEvent(eventEntity);
+
+            if (!updated)
+                return NotFound();
+
+            _eventCommentRepository.Save();
+            var eventToReturn = _mapper.Map<EventDto>(eventEntity);
+
+            return AcceptedAtRoute("GetEventById", new { eventId = eventToReturn.Id }, eventToReturn);
         }
 
         [HttpDelete("{eventId}")]

@@ -10,20 +10,20 @@ namespace TestProgrammationConformit.Services
 {
     public interface IEventCommentRepository
     {
-        // Comments part
+        // ************ Comments part ************
         IEnumerable<Comment> GetComments(Guid eventId);
         Comment GetComment(Guid eventId, Guid commentId);
         void AddComment(Guid eventId, Comment comment);
-        void UpdateComment(Comment comment);
+        bool UpdateComment(Guid eventId, Comment comment);
         bool DeleteComment(Guid eventId, Guid commentId);
         bool CommentExists(Guid commentId);
 
-        // Events part
+        // ************ Events part ************
         Page<EventDto> GetEvents(PagingParameters pagingParameters);
         IEnumerable<Event> GetEvents(IEnumerable<Guid> eventIds);
         Event GetEvent(Guid eventId);
         void AddEvent(Event occasion);
-        void UpdateEvent(Event occasion);
+        bool UpdateEvent(Event occasion);
         bool DeleteEvent(Guid eventId);
         bool EventExists(Guid eventId);
 
