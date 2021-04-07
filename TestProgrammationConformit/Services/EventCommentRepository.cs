@@ -112,7 +112,7 @@ namespace TestProgrammationConformit.Services
             if (eventId == Guid.Empty)
                 throw new ArgumentNullException(nameof(eventId));
 
-            return _context.Events.Where(e => e.Id == eventId).FirstOrDefault();
+            return _context.Events.Where(e => e.Id == eventId).Include(x => x.Comments).FirstOrDefault();
         }
 
         public Page<EventDto> GetEvents(PagingParameters pagingParameters)
@@ -121,8 +121,9 @@ namespace TestProgrammationConformit.Services
 
             var count =  query.Count();
             var items =  query
-                .Skip(pagingParameters.PageNumber)
+                .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
                 .Take(pagingParameters.PageSize)
+                .Include(x => x.Comments)
                 .Select(ev => _mapper.Map<EventDto>(ev))
                 .ToList();
 
