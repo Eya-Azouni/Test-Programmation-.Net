@@ -21,8 +21,7 @@ namespace TestProgrammationConformit.Entities.Pagination
             TotalCount = count;
             PageSize = pageSize;
             CurrentPage = pageNumber;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);            
         }
     }
 }

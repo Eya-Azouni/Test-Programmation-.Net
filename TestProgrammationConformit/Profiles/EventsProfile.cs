@@ -10,7 +10,7 @@ namespace TestProgrammationConformit.Profiles
     {
         public EventsProfile()
         {
-            CreateMap<Entities.Event, Models.EventDto>().ForMember(d => d.CommentsDto,
+            CreateMap<Entities.Event, Models.EventDto>().ForMember(d => d.Comments,
                 opt => opt.MapFrom(c => c.Comments));
             CreateMap<Models.EventForPOSTDto, Entities.Event >();
             CreateMap<Models.EventForPUTDto, Entities.Event>();
