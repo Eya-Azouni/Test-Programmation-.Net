@@ -262,10 +262,5 @@ namespace TestProgrammationConformit.Services
             return (_context.SaveChanges() >= 0);
         }
 
-
-
-
-
-
     }
 }

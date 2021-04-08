@@ -21,7 +21,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Get all events paginated
+        /// Get all events paginated.
         /// </summary>
         /// <param name="pagingParameters"></param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Get an event by given Id
+        /// Get an event by given Id.
         /// </summary>
         /// <param name="eventId"></param>
         /// <returns></returns>
@@ -51,7 +51,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Create a new event
+        /// Create a new event.
         /// </summary>
         /// <param name="eventDto"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Update an existing event
+        /// Update an existing event.
         /// </summary>
         /// <param name="eventDto"></param>
         /// <returns></returns>
@@ -94,7 +94,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Delete and event by given Id
+        /// Delete and event by given Id.
         /// </summary>
         /// <param name="eventId"></param>
         /// <returns></returns>

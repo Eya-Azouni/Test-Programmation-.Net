@@ -22,7 +22,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Get all the comments of a given event
+        /// Get all the comments of a given event.
         /// </summary>
         [HttpGet]
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForEvent(Guid eventId)
@@ -40,7 +40,7 @@ namespace TestProgrammationConformit.Controllers
 
         }
         /// <summary>
-        /// Get a comment by given Id 
+        /// Get a comment by given Id.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="commentId"></param>
@@ -62,7 +62,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Create a new comment
+        /// Create a new comment.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="comment"></param>
@@ -85,7 +85,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Update an existing comment
+        /// Update an existing comment.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="comment"></param>
@@ -112,7 +112,7 @@ namespace TestProgrammationConformit.Controllers
         }
 
         /// <summary>
-        /// Delete and event by given Id
+        /// Delete and event by given Id.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="commentId"></param>
