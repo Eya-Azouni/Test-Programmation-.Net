@@ -21,7 +21,9 @@ namespace TestProgrammationConformit.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        // Get all the comments of a given event
+        /// <summary>
+        /// Get all the comments of a given event
+        /// </summary>
         [HttpGet]
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForEvent(Guid eventId)
         {
@@ -37,8 +39,12 @@ namespace TestProgrammationConformit.Controllers
             return Ok(_mapper.Map<IEnumerable<CommentDto>>(commentsFromRepo));
 
         }
-
-        // Get a comment by given Id 
+        /// <summary>
+        /// Get a comment by given Id 
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         [HttpGet("{commentId}", Name = "GetCommentByIdForEvent")]
         public ActionResult<CommentDto> GetCommentForEvent(Guid eventId, Guid commentId)
         {
@@ -55,7 +61,12 @@ namespace TestProgrammationConformit.Controllers
 
         }
 
-        // Create a new comment
+        /// <summary>
+        /// Create a new comment
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<CommentDto> CreateComment(Guid eventId, [FromBody] CommentForPOSTDto comment)
         {
@@ -73,9 +84,14 @@ namespace TestProgrammationConformit.Controllers
             return CreatedAtRoute("GetCommentByIdForEvent", new { eventId = eventId, commentId = commentToReturn.Id }, commentToReturn);
         }
 
-        // Update an existing comment
+        /// <summary>
+        /// Update an existing comment
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPut]
-        public ActionResult<CommentDto> UpdateComment(Guid eventId, [FromBody] CommentForPUTDto comment)
+        public ActionResult UpdateComment(Guid eventId, [FromBody] CommentForPUTDto comment)
         {
             // 1. checking if the event exists
             if (!_eventCommentRepository.EventExists(eventId))
@@ -95,9 +111,14 @@ namespace TestProgrammationConformit.Controllers
             return NotFound();
         }
 
-        // Delete and event by given Id
+        /// <summary>
+        /// Delete and event by given Id
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         [HttpDelete("{commentId}")]
-        public IActionResult DeleteComment(Guid eventId, Guid commentId)
+        public ActionResult DeleteComment(Guid eventId, Guid commentId)
         {
             // 1. deleting the object by given Id
             var deleted = _eventCommentRepository.DeleteComment(eventId, commentId);

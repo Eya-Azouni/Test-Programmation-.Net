@@ -20,7 +20,11 @@ namespace TestProgrammationConformit.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        // Get all events paginated
+        /// <summary>
+        /// Get all events paginated
+        /// </summary>
+        /// <param name="pagingParameters"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<Page<EventDto>> GetEvents([FromQuery] PagingParameters pagingParameters)
         {
@@ -28,7 +32,11 @@ namespace TestProgrammationConformit.Controllers
             return Ok(eventsFromRepo);
         }
 
-        // Get an event by given Id
+        /// <summary>
+        /// Get an event by given Id
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpGet("{eventId}", Name ="GetEventById")]
         public ActionResult<EventDto> GetEventById(Guid eventId)
         {
@@ -42,7 +50,11 @@ namespace TestProgrammationConformit.Controllers
             return Ok(eventDto);
         }
 
-        // Create a new event
+        /// <summary>
+        /// Create a new event
+        /// </summary>
+        /// <param name="eventDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<EventDto> CreateEvent([FromBody] EventForPOSTDto eventDto)
         {
@@ -57,9 +69,13 @@ namespace TestProgrammationConformit.Controllers
             return CreatedAtRoute("GetEventById", new { eventId = eventToReturn.Id }, eventToReturn);
         }
 
-        // Update an existing event
+        /// <summary>
+        /// Update an existing event
+        /// </summary>
+        /// <param name="eventDto"></param>
+        /// <returns></returns>
         [HttpPut]
-        public ActionResult<EventDto> UpdateComment([FromBody] EventForPUTDto eventDto)
+        public ActionResult UpdateComment([FromBody] EventForPUTDto eventDto)
         {
             // 1. mapping the input
             var eventEntity = _mapper.Map<Event>(eventDto);
@@ -77,7 +93,11 @@ namespace TestProgrammationConformit.Controllers
             return NotFound();
         }
 
-        // Delete and event by given Id
+        /// <summary>
+        /// Delete and event by given Id
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpDelete("{eventId}")]
         public ActionResult DeleteEvent(Guid eventId)
         {
