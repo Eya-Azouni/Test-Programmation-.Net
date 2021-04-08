@@ -75,7 +75,7 @@ namespace TestProgrammationConformit.Controllers
             _eventCommentRepository.Save();
 
             if (deleted)
-                return Ok("Event successfully deleted !");
+                return Ok(new MessageDto("Event successfully deleted !"));
 
                 return NotFound();
         }
