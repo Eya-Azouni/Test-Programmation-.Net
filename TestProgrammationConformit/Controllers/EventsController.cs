@@ -75,7 +75,7 @@ namespace TestProgrammationConformit.Controllers
         /// <param name="eventDto"></param>
         /// <returns></returns>
         [HttpPut]
-        public ActionResult UpdateComment([FromBody] EventForPUTDto eventDto)
+        public ActionResult UpdateEvent([FromBody] EventForPUTDto eventDto)
         {
             // 1. mapping the input
             var eventEntity = _mapper.Map<Event>(eventDto);
